@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/application_list">
+
+    <fragment
+        android:id="@+id/application_list"
+        android:name="by.iapsit.notificationkeeperandhelper.view.ApplicationListFragment"
+        android:label="@string/application_list"
+        tools:layout="@layout/fragment_application_list">
+
+        <action
+            android:id="@+id/action_application_list_to_notification_list"
+            app:destination="@id/notification_list"
+            app:launchSingleTop="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/notification_list"
+        android:name="by.iapsit.notificationkeeperandhelper.view.NotificationListFragment"
+        android:label="fragment_notifications"
+        tools:layout="@layout/fragment_notification_list">
+
+        <argument
+            android:name="package_name"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favourites_list"
+        android:name="by.iapsit.notificationkeeperandhelper.view.FavouritesListFragment"
+        android:label="fragment_favourites"
+        tools:layout="@layout/fragment_favourites_list">
+        <action
+            android:id="@+id/action_favourites_list_to_notification_list"
+            app:destination="@id/notification_list" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="by.iapsit.notificationkeeperandhelper.view.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings"/>
+
+</navigation>

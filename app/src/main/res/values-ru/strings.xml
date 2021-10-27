@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Notification Keeper and Helper</string>
+    <string name="key">Ключ</string>
+    <string name="deleted_application">Удаленное приложение</string>
+    <string name="no_notifications">Нет уведомлений</string>
+    <string name="error">Ошибка</string>
+    <string name="check_access_toast">Установите галочку около Notification Keeper and Helper</string>
+    <string name="deleted">Удалено</string>
+    <string name="fire">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete_notification_question">Удалить уведомление?</string>
+    <string name="notifications">Уведомления</string>
+    <string name="favourites">Избранное</string>
+    <string name="settings">Настройки</string>
+    <string name="application_list">Список приложений</string>
+
+    <string name="authentication_error">Для использования приложения нужно пройти аутентификацию</string>
+    <string name="biometric_authentication">Биометрическая аутентификация</string>
+    <string name="hide_system_notifications">Не отображать системные уведомления</string>
+    <string name="hide_deleted_applications">Не отображать удаленные приложения</string>
+</resources>

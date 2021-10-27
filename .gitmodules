@@ -1,0 +1,3 @@
+[submodule "LolliPin"]
+	path = LolliPin
+	url = https://github.com/omadahealth/LolliPin.git
