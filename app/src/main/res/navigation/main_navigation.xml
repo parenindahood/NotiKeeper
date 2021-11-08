@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/application_list"
-        android:name="by.iapsit.notificationkeeperandhelper.view.ApplicationListFragment"
+        android:name="by.iapsit.notificationkeeperandhelper.view.fragments.ApplicationListFragment"
         android:label="@string/application_list"
         tools:layout="@layout/fragment_application_list">
 
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/notification_list"
-        android:name="by.iapsit.notificationkeeperandhelper.view.NotificationListFragment"
+        android:name="by.iapsit.notificationkeeperandhelper.view.fragments.NotificationListFragment"
         android:label="fragment_notifications"
         tools:layout="@layout/fragment_notification_list">
 
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/favourites_list"
-        android:name="by.iapsit.notificationkeeperandhelper.view.FavouritesListFragment"
+        android:name="by.iapsit.notificationkeeperandhelper.view.fragments.FavouritesListFragment"
         android:label="fragment_favourites"
         tools:layout="@layout/fragment_favourites_list">
         <action
@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/settings"
-        android:name="by.iapsit.notificationkeeperandhelper.view.SettingsFragment"
+        android:name="by.iapsit.notificationkeeperandhelper.view.fragments.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@layout/fragment_settings"/>
 

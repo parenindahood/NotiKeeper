@@ -57,4 +57,6 @@ class ApplicationListAdapter(
             }
         }
     }
+
+    override fun getItemId(position: Int) = position.toLong()
 }

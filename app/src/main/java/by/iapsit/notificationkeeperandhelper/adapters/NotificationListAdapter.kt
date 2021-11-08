@@ -2,6 +2,8 @@ package by.iapsit.notificationkeeperandhelper.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,7 +12,10 @@ import by.iapsit.notificationkeeperandhelper.R
 import by.iapsit.notificationkeeperandhelper.databinding.ItemNotificationBinding
 import by.iapsit.notificationkeeperandhelper.model.NotificationData
 
-class NotificationListAdapter : ListAdapter<NotificationData, NotificationListAdapter.ViewHolder>(DiffCallback) {
+class NotificationListAdapter :
+    ListAdapter<NotificationData, NotificationListAdapter.ViewHolder>(DiffCallback), Filterable {
+
+    private var list = listOf<NotificationData>()
 
     private companion object DiffCallback : DiffUtil.ItemCallback<NotificationData>() {
         override fun areItemsTheSame(
@@ -46,5 +51,34 @@ class NotificationListAdapter : ListAdapter<NotificationData, NotificationListAd
         with(holder.binding) {
             notification = getItem(position)
         }
+    }
+
+    override fun getFilter() = object : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val charSearch = constraint.toString()
+            val filteredList = if (charSearch.isBlank()) {
+                list
+            } else {
+                val resultList = mutableListOf<NotificationData>()
+                for (row in list) {
+                    if (row.title.lowercase().contains(charSearch) || row.text.lowercase()
+                            .contains(charSearch)
+                    ) resultList.add(row)
+                }
+                resultList
+            }
+            return FilterResults().apply {
+                values = filteredList
+            }
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            submitList(results?.values as MutableList<NotificationData>)
+        }
+    }
+
+    fun setData(list: List<NotificationData>) {
+        this.list = list
+        submitList(list)
     }
 }

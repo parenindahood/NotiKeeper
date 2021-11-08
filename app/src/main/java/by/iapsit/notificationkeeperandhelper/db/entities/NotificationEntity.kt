@@ -10,6 +10,8 @@ data class NotificationEntity(
     @ColumnInfo(name = "package_name") val packageName: String,
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "post_time") val postTime: String,
+    @ColumnInfo(name = "post_time") val postTime: Long,
     @ColumnInfo(name = "notification_id") @PrimaryKey(autoGenerate = true) val notificationID: Long = 0
 ) { fun toData() = NotificationData(packageName, text, title, postTime, notificationID) }
+
+fun NotificationData.toEntity() = NotificationEntity(packageName, text, title, postTime)

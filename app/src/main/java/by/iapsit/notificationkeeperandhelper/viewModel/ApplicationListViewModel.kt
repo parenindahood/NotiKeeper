@@ -1,27 +1,17 @@
 package by.iapsit.notificationkeeperandhelper.viewModel
 
 import android.app.Application
-import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import by.iapsit.notificationkeeperandhelper.App
-import by.iapsit.notificationkeeperandhelper.R
-import by.iapsit.notificationkeeperandhelper.db.entities.FavouriteApplicationEntity
 import by.iapsit.notificationkeeperandhelper.model.ApplicationData
 import by.iapsit.notificationkeeperandhelper.utils.Constants
-import by.iapsit.notificationkeeperandhelper.view.ScreenState
+import by.iapsit.notificationkeeperandhelper.view.enums.ScreenState
+import by.iapsit.notificationkeeperandhelper.viewModel.base.BaseApplicationViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class ApplicationListViewModel(application: Application) : BaseViewModel(application) {
-
-    private val preferences = getApplication<App>().applicationContext.getSharedPreferences(
-        Constants.SHARED_PREF_TITLE,
-        AppCompatActivity.MODE_PRIVATE
-    )
+class ApplicationListViewModel(application: Application) : BaseApplicationViewModel(application) {
 
     private val _applicationListLiveData = MutableLiveData<List<ApplicationData>>()
 
@@ -46,47 +36,6 @@ class ApplicationListViewModel(application: Application) : BaseViewModel(applica
         favouritesApplicationsLiveData.observeForever(favouritesApplicationObserver)
     }
 
-    private suspend fun makeListOfApplicationInfo(packageNames: List<String>): List<ApplicationData> {
-        val packageManager = getApplication<App>().applicationContext.packageManager
-        val applicationList = mutableListOf<ApplicationData>()
-        val list = if (preferences.getBoolean(Constants.HIDE_SYSTEM_PREF, false))
-            checkFavourites(
-                makeListUnique(
-                    checkSystem(
-                        packageNames
-                    )
-                )
-            )
-        else checkFavourites(makeListUnique(packageNames))
-        list.forEach {
-            try {
-                with(packageManager) {
-                    val applicationInfo = getApplicationInfo(it, 0)
-                    applicationList.add(
-                        ApplicationData(
-                            it,
-                            getApplicationLabel(applicationInfo).toString(),
-                            getApplicationIcon(it)
-                        )
-                    )
-                }
-            } catch (e: PackageManager.NameNotFoundException) {
-                if (!preferences.getBoolean(Constants.HIDE_DELETED_PREF, true)) applicationList.add(
-                    ApplicationData(
-                        it,
-                        it,
-                        ResourcesCompat.getDrawable(
-                            getApplication<App>().resources,
-                            R.drawable.ic_android,
-                            null
-                        )!!
-                    )
-                )
-            }
-        }
-        return applicationList
-    }
-
     private fun checkSystem(packageNames: List<String>): List<String> {
         val newList = packageNames.toMutableList().apply {
             Constants.SYSTEM_PACKAGES.forEach { packageName: String ->
@@ -99,14 +48,6 @@ class ApplicationListViewModel(application: Application) : BaseViewModel(applica
     }
 
     private fun makeListUnique(list: List<String>) = list.distinct()
-
-    fun insertFavouriteApplication(favouriteApplication: FavouriteApplicationEntity) {
-        uiScope.launch {
-            ioScope.launch {
-                notificationDao.insertFavouritePackageName(favouriteApplication)
-            }
-        }
-    }
 
     private suspend fun checkFavourites(packageNames: List<String>): List<String> {
         val returnTask = uiScope.async {
@@ -134,19 +75,28 @@ class ApplicationListViewModel(application: Application) : BaseViewModel(applica
             _stateScreenListener.postValue(ScreenState.ERROR)
         } else {
             uiScope.launch {
-                _applicationListLiveData.postValue(makeListOfApplicationInfo(packageNames))
+                _applicationListLiveData.postValue(
+                    makeListOfApplicationInfo(
+                        makeListOfPackageNames(
+                            packageNames
+                        )
+                    )
+                )
                 _stateScreenListener.postValue(ScreenState.CONTENT)
             }
         }
     }
 
-    fun deleteNotificationsByPackageName(packageName: String) {
-        uiScope.launch {
-            ioScope.launch {
-                notificationDao.deleteNotificationsByPackageName(packageName)
-            }
-        }
-    }
+    private suspend fun makeListOfPackageNames(packageNames: List<String>) =
+        if (preferences.getBoolean(Constants.HIDE_SYSTEM_PREF, false))
+            checkFavourites(
+                makeListUnique(
+                    checkSystem(
+                        packageNames
+                    )
+                )
+            )
+        else checkFavourites(makeListUnique(packageNames))
 
     override fun onCleared() {
         super.onCleared()

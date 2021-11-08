@@ -13,6 +13,9 @@ interface NotificationDao {
     @Insert
     fun insertNotification(notification: NotificationEntity)
 
+    @Insert
+    fun insertNotificationList(list: List<NotificationEntity>)
+
     @Query("SELECT package_name FROM NotificationEntity")
     fun getPackageNamesLiveData(): LiveData<List<String>>
 
@@ -21,6 +24,9 @@ interface NotificationDao {
 
     @Query("SELECT * FROM NotificationEntity WHERE package_name LIKE :packageName")
     fun getNotificationsByPackageNameLiveData(packageName: String): LiveData<List<NotificationEntity>>
+
+    @Query("SELECT * FROM NotificationEntity WHERE package_name LIKE :packageName")
+    fun getNotificationsByPackageName(packageName: String): List<NotificationEntity>
 
     @Query("DELETE FROM NotificationEntity WHERE package_name LIKE :packageName")
     fun deleteNotificationsByPackageName(packageName: String)

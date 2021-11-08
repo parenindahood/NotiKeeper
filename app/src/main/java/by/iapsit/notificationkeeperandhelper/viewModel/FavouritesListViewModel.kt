@@ -1,18 +1,15 @@
 package by.iapsit.notificationkeeperandhelper.viewModel
 
 import android.app.Application
-import android.content.pm.PackageManager
-import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import by.iapsit.notificationkeeperandhelper.App
-import by.iapsit.notificationkeeperandhelper.R
 import by.iapsit.notificationkeeperandhelper.model.ApplicationData
-import by.iapsit.notificationkeeperandhelper.view.ScreenState
+import by.iapsit.notificationkeeperandhelper.view.enums.ScreenState
+import by.iapsit.notificationkeeperandhelper.viewModel.base.BaseApplicationViewModel
 import kotlinx.coroutines.launch
 
-class FavouritesListViewModel(application: Application) : BaseViewModel(application) {
+class FavouritesListViewModel(application: Application) : BaseApplicationViewModel(application) {
 
     private val _applicationListLiveData = MutableLiveData<List<ApplicationData>>()
 
@@ -35,54 +32,6 @@ class FavouritesListViewModel(application: Application) : BaseViewModel(applicat
     init {
         _stateScreenListener.postValue(ScreenState.LOADING)
         packageNamesLiveData.observeForever(observer)
-    }
-
-    private fun makeListOfApplicationInfo(packageNames: List<String>): List<ApplicationData> {
-        val packageManager = getApplication<App>().applicationContext.packageManager
-        val applicationList = mutableListOf<ApplicationData>()
-        packageNames.forEach {
-            try {
-                with(packageManager) {
-                    val applicationInfo = getApplicationInfo(it, 0)
-                    applicationList.add(
-                        ApplicationData(
-                            it,
-                            getApplicationLabel(applicationInfo).toString(),
-                            getApplicationIcon(it)
-                        )
-                    )
-                }
-            } catch (e: PackageManager.NameNotFoundException) {
-                applicationList.add(
-                    ApplicationData(
-                        it,
-                        it,
-                        ResourcesCompat.getDrawable(
-                            getApplication<App>().resources,
-                            R.drawable.ic_android,
-                            null
-                        )!!
-                    )
-                )
-            }
-        }
-        return applicationList
-    }
-
-    fun deleteFavouriteApplication(packageName: String) {
-        uiScope.launch {
-            ioScope.launch {
-                notificationDao.deleteFavouritePackageName(packageName)
-            }
-        }
-    }
-
-    fun deleteNotificationsByPackageName(packageName: String) {
-        uiScope.launch {
-            ioScope.launch {
-                notificationDao.deleteNotificationsByPackageName(packageName)
-            }
-        }
     }
 
     override fun onCleared() {

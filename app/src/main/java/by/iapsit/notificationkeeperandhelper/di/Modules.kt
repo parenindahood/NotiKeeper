@@ -7,10 +7,10 @@ import by.iapsit.notificationkeeperandhelper.adapters.ApplicationListAdapter
 import by.iapsit.notificationkeeperandhelper.adapters.NotificationListAdapter
 import by.iapsit.notificationkeeperandhelper.db.NotificationDatabase
 import by.iapsit.notificationkeeperandhelper.utils.Constants
-import by.iapsit.notificationkeeperandhelper.view.FlowActivity
 import by.iapsit.notificationkeeperandhelper.viewModel.ApplicationListViewModel
 import by.iapsit.notificationkeeperandhelper.viewModel.FavouritesListViewModel
 import by.iapsit.notificationkeeperandhelper.viewModel.NotificationListViewModel
+import by.iapsit.notificationkeeperandhelper.viewModel.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -26,6 +26,7 @@ val viewModelsModule = module {
             packageName
         )
     }
+    viewModel { SettingsViewModel(androidApplication()) }
 }
 
 val sharedPreferencesModule = module {

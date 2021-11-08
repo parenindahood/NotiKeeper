@@ -1,9 +1,10 @@
-package by.iapsit.notificationkeeperandhelper.view
+package by.iapsit.notificationkeeperandhelper.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -14,13 +15,21 @@ import androidx.recyclerview.widget.RecyclerView
 import by.iapsit.notificationkeeperandhelper.R
 import by.iapsit.notificationkeeperandhelper.adapters.ApplicationListAdapter
 import by.iapsit.notificationkeeperandhelper.databinding.FragmentFavouritesListBinding
+import by.iapsit.notificationkeeperandhelper.db.entities.FavouriteApplicationEntity
 import by.iapsit.notificationkeeperandhelper.utils.SwipeTouchHelper
+import by.iapsit.notificationkeeperandhelper.utils.makeSnackBarWithAction
 import by.iapsit.notificationkeeperandhelper.viewModel.FavouritesListViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class FavouritesListFragment : Fragment() {
+
+    private val uiScope = CoroutineScope(Dispatchers.Main)
 
     private val favouritesAdapter by inject<ApplicationListAdapter> {
         val openNotificationListAction: (String) -> Unit = {
@@ -39,12 +48,25 @@ class FavouritesListFragment : Fragment() {
     private val itemTouchHelperCallback by lazy {
         object : SwipeTouchHelper(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val list = favouritesAdapter.currentList.toMutableList()
-                val application = list[viewHolder.adapterPosition]
-                list.remove(application)
-                viewModel.deleteNotificationsByPackageName(application.packageName)
-                viewModel.deleteFavouriteApplication(application.packageName)
-                favouritesAdapter.submitList(list)
+                uiScope.launch {
+                    val packageName =
+                        favouritesAdapter.currentList[viewHolder.adapterPosition].packageName
+                    val deletedList = viewModel.getNotificationsByPackageName(packageName)
+
+                    viewModel.deleteNotificationsByPackageName(packageName)
+                    viewModel.deleteFavouriteApplication(packageName)
+
+                    with(resources) {
+                        requireActivity().makeSnackBarWithAction(
+                            getString(R.string.item_deleted),
+                            getString(R.string.cancel),
+                            binding.root
+                        ) {
+                            viewModel.insertFavouriteApplication(FavouriteApplicationEntity(packageName))
+                            viewModel.undoDeleteApplication(deletedList)
+                        }
+                    }
+                }
             }
         }
     }
@@ -83,8 +105,19 @@ class FavouritesListFragment : Fragment() {
                 DividerItemDecoration(
                     requireContext(),
                     RecyclerView.VERTICAL
-                ).apply { setDrawable(resources.getDrawable(R.drawable.drawable_divider)) }
+                ).apply { setDrawable(
+                    ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.drawable_divider,
+                        null
+                    )!!
+                ) }
             )
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        uiScope.cancel()
     }
 }

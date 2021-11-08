@@ -1,11 +1,11 @@
-package by.iapsit.notificationkeeperandhelper.viewModel
+package by.iapsit.notificationkeeperandhelper.viewModel.base
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import by.iapsit.notificationkeeperandhelper.App
-import by.iapsit.notificationkeeperandhelper.view.ScreenState
+import by.iapsit.notificationkeeperandhelper.view.enums.ScreenState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel

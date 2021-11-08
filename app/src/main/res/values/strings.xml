@@ -1,21 +1,33 @@
 <resources>
-    <string name="app_name">Notification Keeper and Helper</string>
-    <string name="key">Key</string>
+    <string name="app_name">NotiKeeper</string>
+
+    <!--    UI-->
     <string name="deleted_application">Deleted application</string>
     <string name="no_notifications">No notifications</string>
     <string name="error">Error</string>
+
+    <!--    Check Access-->
     <string name="check_access_toast">Please check the box next to Notification Keeper And Helper</string>
-    <string name="deleted">Deleted</string>
-    <string name="fire">OK</string>
-    <string name="cancel">Cancel</string>
-    <string name="delete_notification_question">Delete notifications?</string>
+
+    <!--    BottomNavigationView-->
     <string name="notifications">Notifications</string>
     <string name="favourites">Favourites</string>
     <string name="settings">Settings</string>
+
     <string name="application_list">Application list</string>
 
+    <!--    Settings-->
     <string name="authentication_error">To continue using the application, you need to pass authentication</string>
     <string name="biometric_authentication">Biometric authentication</string>
     <string name="hide_system_notifications">Hide system notifications</string>
     <string name="hide_deleted_applications">Hide deleted applications</string>
+    <string name="delete_all_data">Delete all data</string>
+
+    <!--    Delete data dialog-->
+    <string name="delete_all_data_question">Are you sure? The operation cannot be canceled</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+
+    <!--    Delete item snackbar-->
+    <string name="item_deleted">Deleted</string>
 </resources>
