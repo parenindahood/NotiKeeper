@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="by.iapsit.notificationkeeperandhelper.viewModel.ApplicationListViewModel" />
+            type="by.iapsit.notikeeper.viewModel.ApplicationListViewModel" />
 
     </data>
 
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dark_white">
-        
+
         <ViewFlipper
             android:id="@+id/view_flipper"
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/item_application"/>
+                tools:listitem="@layout/item_application" />
 
             <androidx.core.widget.ContentLoadingProgressBar
                 style="?android:attr/progressBarStyleLarge"

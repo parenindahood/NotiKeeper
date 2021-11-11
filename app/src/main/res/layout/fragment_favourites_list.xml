@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="by.iapsit.notificationkeeperandhelper.viewModel.FavouritesListViewModel" />
+            type="by.iapsit.notikeeper.viewModel.FavouritesListViewModel" />
 
     </data>
 
@@ -26,7 +26,7 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/item_application"/>
+                tools:listitem="@layout/item_application" />
 
             <androidx.core.widget.ContentLoadingProgressBar
                 style="?android:attr/progressBarStyleLarge"

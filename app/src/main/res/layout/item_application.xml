@@ -7,7 +7,7 @@
 
         <variable
             name="application"
-            type="by.iapsit.notificationkeeperandhelper.model.ApplicationData" />
+            type="by.iapsit.notikeeper.model.ApplicationData" />
 
     </data>
 

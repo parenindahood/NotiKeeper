@@ -4,16 +4,16 @@
     <item
         android:id="@+id/application_list"
         android:title="@string/notifications"
-        android:icon="@drawable/ic_notifications"/>
+        android:icon="@drawable/ic_notifications" />
 
     <item
         android:id="@+id/favourites_list"
         android:title="@string/favourites"
-        android:icon="@drawable/ic_star"/>
+        android:icon="@drawable/ic_star" />
 
     <item
         android:id="@+id/settings"
         android:title="@string/settings"
-        android:icon="@drawable/ic_settings"/>
+        android:icon="@drawable/ic_settings" />
 
 </menu>

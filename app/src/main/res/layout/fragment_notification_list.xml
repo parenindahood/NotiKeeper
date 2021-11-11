@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="by.iapsit.notificationkeeperandhelper.viewModel.NotificationListViewModel" />
+            type="by.iapsit.notikeeper.viewModel.NotificationListViewModel" />
 
         <variable
             name="application"
-            type="by.iapsit.notificationkeeperandhelper.model.ApplicationData" />
+            type="by.iapsit.notikeeper.model.ApplicationData" />
 
     </data>
 

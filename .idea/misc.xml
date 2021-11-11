@@ -3,6 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/drawable_divider.xml" value="0.2264840182648402" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/gradient_launcher.xml" value="0.2264840182648402" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_android.xml" value="0.22962962962962963" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_appearance.xml" value="0.22962962962962963" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_close.xml" value="0.22962962962962963" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_delete.xml" value="0.22962962962962963" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_icon_foreground.xml" value="0.2264840182648402" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_laucner_foreground.xml" value="0.2264840182648402" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2264840182648402" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2264840182648402" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_notifications.xml" value="0.22962962962962963" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_search.xml" value="0.22962962962962963" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_security.xml" value="0.22962962962962963" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_settings.xml" value="0.22962962962962963" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_star.xml" value="0.22962962962962963" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/activity_flow.xml" value="0.2152777777777778" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/fragment_application_list.xml" value="0.2152777777777778" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/fragment_favourites_list.xml" value="0.2152777777777778" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/fragment_settings.xml" value="0.2152777777777778" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/item_notification.xml" value="0.2152777777777778" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2152777777777778" />
         <entry key="..\:/Code/AndroidStudio/NotificationKeeperandHelper/app/src/main/res/drawable/drawable_divider.xml" value="0.25833333333333336" />
         <entry key="..\:/Code/AndroidStudio/NotificationKeeperandHelper/app/src/main/res/drawable/ic_android.xml" value="0.13802083333333334" />
         <entry key="..\:/Code/AndroidStudio/NotificationKeeperandHelper/app/src/main/res/drawable/ic_appearance.xml" value="0.22962962962962963" />
