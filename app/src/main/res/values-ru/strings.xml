@@ -17,7 +17,7 @@
     <string name="application_list">Список приложений</string>
 
     <!--    Settings-->
-    <string name="authentication_error">Для использования приложения нужно пройти аутентификацию</string>
+    <string name="authentication_error">Для использования приложения необходимо пройти аутентификацию</string>
     <string name="biometric_authentication">Биометрическая аутентификация</string>
     <string name="hide_system_notifications">Не отображать системные уведомления</string>
     <string name="hide_deleted_applications">Не отображать удаленные приложения</string>
@@ -30,4 +30,7 @@
 
     <!--    Delete item snackbar-->
     <string name="item_deleted">Удалено</string>
+
+    <!--    Notification List Menu-->
+    <string name="search">Поиск</string>
 </resources>

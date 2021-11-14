@@ -51,4 +51,12 @@ interface NotificationDao {
 
     @Query("DELETE FROM FavouriteApplicationEntity")
     fun deleteAllFavouritePackageNames()
+
+    @Query("SELECT EXISTS(SELECT * FROM NotificationEntity WHERE package_name LIKE :packageName AND text LIKE :text AND title LIKE :title AND post_time LIKE :postTime)")
+    fun checkNotificationExists(
+        packageName: String,
+        text: String,
+        title: String,
+        postTime: Long
+    ): Boolean
 }

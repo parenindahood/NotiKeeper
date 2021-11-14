@@ -20,32 +20,31 @@ class NotificationListenerService : NotificationListenerService() {
         super.onNotificationPosted(sbn)
         val extras = sbn?.notification?.extras
         if (sbn != null && extras != null) {
-            uiScope.launch {
-                ioScope.launch {
-                    insertNotification(
-                        sbn.packageName,
-                        extras.getString(Notification.EXTRA_TEXT),
-                        extras.getString(Notification.EXTRA_TITLE),
-                        sbn.postTime
-                    )
+
+            val packageName = sbn.packageName
+            val text = extras.getString(Notification.EXTRA_TEXT)
+            val title = extras.getString(Notification.EXTRA_TITLE)
+            val postTime = sbn.postTime
+
+            if (text != null && title != null) {
+                uiScope.launch {
+                    ioScope.launch {
+                        if (!notificationDao.checkNotificationExists(
+                                packageName, text, title, postTime
+                            )
+                        ) {
+                            notificationDao.insertNotification(
+                                NotificationEntity(
+                                    packageName,
+                                    text,
+                                    title,
+                                    postTime
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }
-    }
-
-    private fun insertNotification(
-        packageName: String,
-        text: String?,
-        title: String?,
-        postTime: Long
-    ) {
-        if (text != null && title != null) notificationDao.insertNotification(
-            NotificationEntity(
-                packageName,
-                text,
-                title,
-                postTime
-            )
-        )
     }
 }

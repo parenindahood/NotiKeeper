@@ -30,4 +30,7 @@
 
     <!--    Delete item snackbar-->
     <string name="item_deleted">Deleted</string>
+
+    <!--    Notification List Menu-->
+    <string name="search">Search</string>
 </resources>
