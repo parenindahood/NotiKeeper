@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/notification_list"
         android:name="by.iapsit.notikeeper.view.fragments.NotificationListFragment"
-        android:label="fragment_notifications"
+        android:label="@string/notifications"
         tools:layout="@layout/fragment_notification_list">
 
         <argument

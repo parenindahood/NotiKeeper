@@ -80,7 +80,7 @@ abstract class BaseApplicationViewModel(application: Application) : BaseViewMode
                     )
                 }
             } catch (e: PackageManager.NameNotFoundException) {
-                if (!preferences.getBoolean(Constants.HIDE_DELETED_PREF, true)) applicationList.add(
+                if (!preferences.getBoolean(Constants.HIDE_DELETED_PREF, false)) applicationList.add(
                     ApplicationData(
                         it,
                         it,
