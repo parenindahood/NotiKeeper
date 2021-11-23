@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import by.iapsit.notikeeper.db.entities.FavouriteApplicationEntity
+import by.iapsit.notikeeper.db.entities.FilteredApplicationEntity
 import by.iapsit.notikeeper.db.entities.NotificationEntity
 
 @Dao
@@ -59,4 +60,16 @@ interface NotificationDao {
         title: String,
         postTime: Long
     ): Boolean
+
+    @Insert
+    fun insertFilteredPackageName(filteredApplication: FilteredApplicationEntity)
+
+    @Query("DELETE FROM FilteredApplicationEntity WHERE package_name LIKE :packageName")
+    fun deleteFilteredPackageName(packageName: String)
+
+    @Query("SELECT EXISTS(SELECT * FROM FilteredApplicationEntity WHERE package_name LIKE :packageName)")
+    fun checkIsFiltered(packageName: String): Boolean
+
+    @Query("SELECT package_name FROM FilteredApplicationEntity")
+    fun getAllFilteredPackageNames(): List<String>
 }

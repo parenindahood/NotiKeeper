@@ -24,8 +24,6 @@ class NotificationListFragment : Fragment() {
 
     private lateinit var binding: FragmentNotificationListBinding
 
-    private lateinit var uiController: UIController
-
     private val viewModel by viewModel<NotificationListViewModel> {
         parametersOf(
             NotificationListFragmentArgs.fromBundle(
@@ -65,8 +63,6 @@ class NotificationListFragment : Fragment() {
     ): View? {
         binding = FragmentNotificationListBinding.inflate(layoutInflater)
 
-        uiController = requireActivity() as FlowActivity
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -86,18 +82,18 @@ class NotificationListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        uiController.showNotificationsUI()
+        (requireActivity() as FlowActivity).showNotificationsUI()
     }
 
     override fun onStop() {
         super.onStop()
-        uiController.hideNotificationsUI()
+        (requireActivity() as FlowActivity).hideNotificationsUI()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
-        inflater.inflate(R.menu.notification_list_menu, menu)
+        inflater.inflate(R.menu.search_menu, menu)
         val searchView = SearchView(
             (requireContext() as FlowActivity).supportActionBar?.themedContext ?: requireContext()
         )

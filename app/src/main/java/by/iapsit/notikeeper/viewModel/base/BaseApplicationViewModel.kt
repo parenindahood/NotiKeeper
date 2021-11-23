@@ -65,7 +65,6 @@ abstract class BaseApplicationViewModel(application: Application) : BaseViewMode
     }
 
     protected fun makeListOfApplicationInfo(packageNames: List<String>): List<ApplicationData> {
-        val packageManager = getApplication<App>().applicationContext.packageManager
         val applicationList = mutableListOf<ApplicationData>()
         packageNames.forEach {
             try {

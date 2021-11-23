@@ -22,7 +22,11 @@
         <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/activity_flow.xml" value="0.2152777777777778" />
         <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/fragment_application_list.xml" value="0.2152777777777778" />
         <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/fragment_favourites_list.xml" value="0.2152777777777778" />
-        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/fragment_settings.xml" value="0.2152777777777778" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/fragment_filter.xml" value="0.2152777777777778" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/fragment_notification_list.xml" value="0.21232876712328766" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/item_application.xml" value="0.2152777777777778" />
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/item_filter_application.xml" value="0.264" />
         <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/layout/item_notification.xml" value="0.2152777777777778" />
         <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2152777777777778" />
         <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/menu/notification_list_menu.xml" value="0.2152777777777778" />

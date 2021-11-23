@@ -11,6 +11,7 @@ import by.iapsit.notikeeper.viewModel.base.BaseApplicationViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
+
 class ApplicationListViewModel(application: Application) : BaseApplicationViewModel(application) {
 
     private val _applicationListLiveData = MutableLiveData<List<ApplicationData>>()
@@ -37,28 +38,25 @@ class ApplicationListViewModel(application: Application) : BaseApplicationViewMo
     }
 
     private fun checkSystem(packageNames: List<String>): List<String> {
-        val newList = packageNames.toMutableList().apply {
-            Constants.SYSTEM_PACKAGES.forEach { packageName: String ->
-                removeAll {
-                    it.startsWith(packageName)
-                }
-            }
+        val list = mutableListOf<String>()
+        packageNames.forEach {
+            if (!isSystemPackage(it)) list.add(it)
         }
-        return newList
+        return list
     }
 
     private fun makeListUnique(list: List<String>) = list.distinct()
 
     private suspend fun checkFavourites(packageNames: List<String>): List<String> {
-        val returnTask = uiScope.async {
-            val task = ioScope.async {
+        val uiTask = uiScope.async {
+            val ioTask = ioScope.async {
                 notificationDao.getFavouritePackageNames()
             }
             val newList = packageNames.toMutableList()
-            newList.removeAll(task.await())
+            newList.removeAll(ioTask.await())
             newList
         }
-        return returnTask.await()
+        return uiTask.await()
     }
 
     private fun updateUI() {
@@ -75,13 +73,25 @@ class ApplicationListViewModel(application: Application) : BaseApplicationViewMo
             _stateScreenListener.postValue(ScreenState.ERROR)
         } else {
             uiScope.launch {
-                _applicationListLiveData.postValue(
-                    makeListOfApplicationInfo(
-                        makeListOfPackageNames(
-                            packageNames
+                if (preferences.getBoolean(Constants.FILTER_PREF, false)) {
+                    _applicationListLiveData.postValue(
+                        makeListOfApplicationInfo(
+                            filter(
+                                makeListOfPackageNames(
+                                    packageNames
+                                )
+                            )
                         )
                     )
-                )
+                } else {
+                    _applicationListLiveData.postValue(
+                        makeListOfApplicationInfo(
+                            makeListOfPackageNames(
+                                packageNames
+                            )
+                        )
+                    )
+                }
                 _stateScreenListener.postValue(ScreenState.CONTENT)
             }
         }
@@ -97,6 +107,18 @@ class ApplicationListViewModel(application: Application) : BaseApplicationViewMo
                 )
             )
         else checkFavourites(makeListUnique(packageNames))
+
+    private suspend fun filter(packageNames: List<String>): List<String> {
+        val uiTask = uiScope.async {
+            val list = packageNames.toMutableList()
+            val ioTask = ioScope.async {
+                notificationDao.getAllFilteredPackageNames()
+            }
+            list.removeAll(ioTask.await())
+            list
+        }
+        return uiTask.await()
+    }
 
     override fun onCleared() {
         super.onCleared()

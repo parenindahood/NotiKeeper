@@ -18,7 +18,6 @@ import by.iapsit.notikeeper.databinding.FragmentFavouritesListBinding
 import by.iapsit.notikeeper.db.entities.FavouriteApplicationEntity
 import by.iapsit.notikeeper.utils.SwipeTouchHelper
 import by.iapsit.notikeeper.utils.makeSnackBarWithAction
-import by.iapsit.notikeeper.view.FlowActivity
 import by.iapsit.notikeeper.viewModel.FavouritesListViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
