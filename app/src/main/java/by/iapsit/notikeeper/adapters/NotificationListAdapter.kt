@@ -55,7 +55,7 @@ class NotificationListAdapter :
 
     override fun getFilter() = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val charSearch = constraint.toString()
+            val charSearch = constraint.toString().lowercase()
             val filteredList = if (charSearch.isBlank()) {
                 list
             } else {

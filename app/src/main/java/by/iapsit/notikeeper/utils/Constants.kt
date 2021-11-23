@@ -4,15 +4,9 @@ object Constants {
 
     const val DATABASE_NAME = "NotificationDatabase"
 
-    val SYSTEM_PACKAGES = listOf(
-        "android",
-        "com.samsung",
-        "com.android",
-        "com.sec.android"
-    )
-
     const val SHARED_PREF_TITLE = "settings"
     const val SECURITY_PREF = "security"
     const val HIDE_SYSTEM_PREF = "hide_system"
     const val HIDE_DELETED_PREF = "hide_deleted"
+    const val FILTER_PREF = "filter"
 }

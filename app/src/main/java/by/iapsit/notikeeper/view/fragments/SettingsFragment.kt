@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.iapsit.notikeeper.R
 import by.iapsit.notikeeper.databinding.FragmentSettingsBinding
 import by.iapsit.notikeeper.utils.BiometricUtils
@@ -44,10 +45,17 @@ class SettingsFragment : Fragment(),
     }
 
     private fun setButtonsOnClickListeners() {
-        binding.deleteAllDataButton.setOnClickListener {
-            DeleteDataConfirmationDialogFragment().show(
-                childFragmentManager, DeleteDataConfirmationDialogFragment.TAG
-            )
+        with(binding) {
+            deleteAllDataButton.setOnClickListener {
+                DeleteDataConfirmationDialogFragment().show(
+                    childFragmentManager, DeleteDataConfirmationDialogFragment.TAG
+                )
+            }
+            filterButton.setOnClickListener {
+                findNavController().navigate(
+                    SettingsFragmentDirections.actionSettingsToFilter()
+                )
+            }
         }
     }
 
@@ -58,6 +66,8 @@ class SettingsFragment : Fragment(),
                 securitySwitch.isChecked = getBoolean(Constants.SECURITY_PREF, false)
                 hideSystemSwitch.isChecked = getBoolean(Constants.HIDE_SYSTEM_PREF, false)
                 hideDeletedSwitch.isChecked = getBoolean(Constants.HIDE_DELETED_PREF, false)
+                filterSwitch.isChecked = getBoolean(Constants.FILTER_PREF, false)
+                filterButton.isEnabled = getBoolean(Constants.FILTER_PREF, false)
             }
         }
     }
@@ -72,6 +82,10 @@ class SettingsFragment : Fragment(),
             }
             hideDeletedSwitch.setOnCheckedChangeListener { _, isChecked ->
                 preferences.putBoolean(Constants.HIDE_DELETED_PREF, isChecked)
+            }
+            filterSwitch.setOnCheckedChangeListener { _, isChecked ->
+                preferences.putBoolean(Constants.FILTER_PREF, isChecked)
+                filterButton.isEnabled = isChecked
             }
         }
     }

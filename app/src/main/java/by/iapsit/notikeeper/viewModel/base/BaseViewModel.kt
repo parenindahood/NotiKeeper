@@ -1,6 +1,7 @@
 package by.iapsit.notikeeper.viewModel.base
 
 import android.app.Application
+import android.content.pm.ApplicationInfo
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +17,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     protected val _stateScreenListener = MutableLiveData(ScreenState.LOADING)
 
+    protected val packageManager = getApplication<App>().packageManager
+
     val stateScreenListener: LiveData<ScreenState>
         get() = _stateScreenListener
 
@@ -26,5 +29,12 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         super.onCleared()
         uiScope.cancel()
         ioScope.cancel()
+    }
+
+    protected fun isSystemPackage(packageName: String): Boolean {
+        return packageManager.getPackageInfo(
+            packageName,
+            0
+        ).applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
     }
 }

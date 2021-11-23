@@ -3,14 +3,12 @@ package by.iapsit.notikeeper.di
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import by.iapsit.notikeeper.adapters.ApplicationFilterAdapter
 import by.iapsit.notikeeper.adapters.ApplicationListAdapter
 import by.iapsit.notikeeper.adapters.NotificationListAdapter
 import by.iapsit.notikeeper.db.NotificationDatabase
 import by.iapsit.notikeeper.utils.Constants
-import by.iapsit.notikeeper.viewModel.ApplicationListViewModel
-import by.iapsit.notikeeper.viewModel.FavouritesListViewModel
-import by.iapsit.notikeeper.viewModel.NotificationListViewModel
-import by.iapsit.notikeeper.viewModel.SettingsViewModel
+import by.iapsit.notikeeper.viewModel.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -27,6 +25,7 @@ val viewModelsModule = module {
         )
     }
     viewModel { SettingsViewModel(androidApplication()) }
+    viewModel { FilterViewModel(androidApplication()) }
 }
 
 val sharedPreferencesModule = module {
@@ -49,6 +48,9 @@ val adaptersModule = module {
         )
     }
     factory { NotificationListAdapter() }
+    factory { (insertFilteredAction: (String) -> Unit, deleteFilteredAction: (String) -> Unit, checkIsFilteredAction: suspend (String) -> Boolean) ->
+        ApplicationFilterAdapter(insertFilteredAction, deleteFilteredAction, checkIsFilteredAction)
+    }
 }
 
 val databaseModule = module {

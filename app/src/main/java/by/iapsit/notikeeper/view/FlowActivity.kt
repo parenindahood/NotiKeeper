@@ -17,11 +17,10 @@ import by.iapsit.notikeeper.databinding.ActivityFlowBinding
 import by.iapsit.notikeeper.utils.BiometricUtils
 import by.iapsit.notikeeper.utils.Constants
 import by.iapsit.notikeeper.utils.makeToast
-import by.iapsit.notikeeper.view.fragments.NotificationListFragment
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
-class FlowActivity : AppCompatActivity(), NotificationListFragment.UIController {
+class FlowActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFlowBinding
 
@@ -100,13 +99,12 @@ class FlowActivity : AppCompatActivity(), NotificationListFragment.UIController 
         supportActionBar?.setDisplayShowHomeEnabled(false)
     }
 
-    override fun showNotificationsUI() {
+    fun showNotificationsUI() {
         hideBottomNavigationView()
         showBackButton()
-
     }
 
-    override fun hideNotificationsUI() {
+    fun hideNotificationsUI() {
         showBottomNavigationView()
         hideBackButton()
     }

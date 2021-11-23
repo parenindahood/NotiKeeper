@@ -22,6 +22,9 @@
     <string name="hide_system_notifications">Hide system notifications</string>
     <string name="hide_deleted_applications">Hide deleted applications</string>
     <string name="delete_all_data">Delete all data</string>
+    <string name="filter">Filter</string>
+    <string name="filter_settings">Filter settings</string>
+    <string name="hide_notifications_from">Hide notifications from:</string>
 
     <!--    Delete data dialog-->
     <string name="delete_all_data_question">Are you sure? The operation cannot be canceled</string>
