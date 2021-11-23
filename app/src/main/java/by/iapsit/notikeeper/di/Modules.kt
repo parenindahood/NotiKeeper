@@ -68,7 +68,7 @@ val databaseModule = module {
 
 val vibratorModule = module {
 
-    factory { (context: Context) ->
+    single { (context: Context) ->
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager =
                 context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager

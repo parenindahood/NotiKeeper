@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import by.iapsit.notikeeper.R
 import by.iapsit.notikeeper.adapters.NotificationListAdapter
 import by.iapsit.notikeeper.databinding.FragmentNotificationListBinding
+import by.iapsit.notikeeper.utils.Constants
 import by.iapsit.notikeeper.utils.SwipeTouchHelper
 import by.iapsit.notikeeper.utils.makeSnackBarWithAction
 import by.iapsit.notikeeper.utils.makeVibration
@@ -47,7 +48,7 @@ class NotificationListFragment : Fragment() {
                 viewModel.deleteNotificationByID(notification.id)
                 notificationAdapter.setData(list)
 
-                vibrator.makeVibration(100L)
+                vibrator.makeVibration(Constants.VIBRATION_DURATION)
 
                 with(resources) {
                     requireActivity().makeSnackBarWithAction(
