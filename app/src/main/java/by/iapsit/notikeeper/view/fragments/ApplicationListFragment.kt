@@ -18,6 +18,7 @@ import by.iapsit.notikeeper.R
 import by.iapsit.notikeeper.adapters.ApplicationListAdapter
 import by.iapsit.notikeeper.databinding.FragmentApplicationListBinding
 import by.iapsit.notikeeper.db.entities.FavouriteApplicationEntity
+import by.iapsit.notikeeper.utils.Constants
 import by.iapsit.notikeeper.utils.SwipeTouchHelper
 import by.iapsit.notikeeper.utils.makeSnackBarWithAction
 import by.iapsit.notikeeper.utils.makeVibration
@@ -53,7 +54,7 @@ class ApplicationListFragment : Fragment() {
         }
         val setApplicationFavouriteAction: (String) -> Unit = {
             viewModel.insertFavouriteApplication(FavouriteApplicationEntity(it))
-            vibrator.makeVibration(100L)
+            vibrator.makeVibration(Constants.VIBRATION_DURATION)
         }
         parametersOf(
             openNotificationListAction, setApplicationFavouriteAction, false
@@ -70,7 +71,7 @@ class ApplicationListFragment : Fragment() {
 
                     viewModel.deleteNotificationsByPackageName(packageName)
 
-                    vibrator.makeVibration(100L)
+                    vibrator.makeVibration(Constants.VIBRATION_DURATION)
 
                     with(resources) {
                         requireActivity().makeSnackBarWithAction(

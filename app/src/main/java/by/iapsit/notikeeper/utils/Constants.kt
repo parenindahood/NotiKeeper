@@ -2,6 +2,8 @@ package by.iapsit.notikeeper.utils
 
 object Constants {
 
+    const val VIBRATION_DURATION = 50L
+
     const val DATABASE_NAME = "NotificationDatabase"
 
     const val SHARED_PREF_TITLE = "settings"
