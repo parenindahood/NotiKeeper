@@ -1,6 +1,7 @@
 package by.iapsit.notikeeper.view.fragments
 
 import android.os.Bundle
+import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import by.iapsit.notikeeper.databinding.FragmentFavouritesListBinding
 import by.iapsit.notikeeper.db.entities.FavouriteApplicationEntity
 import by.iapsit.notikeeper.utils.SwipeTouchHelper
 import by.iapsit.notikeeper.utils.makeSnackBarWithAction
+import by.iapsit.notikeeper.utils.makeVibration
 import by.iapsit.notikeeper.viewModel.FavouritesListViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +33,8 @@ class FavouritesListFragment : Fragment() {
 
     private val uiScope = CoroutineScope(Dispatchers.Main)
 
+    private val vibrator by inject<Vibrator> { parametersOf(requireContext()) }
+
     private val favouritesAdapter by inject<ApplicationListAdapter> {
         val openNotificationListAction: (String) -> Unit = {
             findNavController().navigate(
@@ -41,6 +45,7 @@ class FavouritesListFragment : Fragment() {
         }
         val setApplicationFavouriteAction: (String) -> Unit = {
             viewModel.deleteFavouriteApplication(it)
+            vibrator.makeVibration(100L)
         }
         parametersOf(openNotificationListAction, setApplicationFavouriteAction, true)
     }
@@ -55,6 +60,8 @@ class FavouritesListFragment : Fragment() {
 
                     viewModel.deleteNotificationsByPackageName(packageName)
                     viewModel.deleteFavouriteApplication(packageName)
+
+                    vibrator.makeVibration(100L)
 
                     with(resources) {
                         requireActivity().makeSnackBarWithAction(

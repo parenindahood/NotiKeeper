@@ -1,6 +1,9 @@
 package by.iapsit.notikeeper.di
 
 import android.content.Context
+import android.os.Build
+import android.os.Vibrator
+import android.os.VibratorManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import by.iapsit.notikeeper.adapters.ApplicationFilterAdapter
@@ -60,5 +63,16 @@ val databaseModule = module {
             androidContext(), NotificationDatabase::class.java,
             Constants.DATABASE_NAME
         ).build()
+    }
+}
+
+val vibratorModule = module {
+
+    factory { (context: Context) ->
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager =
+                context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
 }

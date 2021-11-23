@@ -1,6 +1,7 @@
 package by.iapsit.notikeeper.view.fragments
 
 import android.os.Bundle
+import android.os.Vibrator
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
@@ -14,6 +15,7 @@ import by.iapsit.notikeeper.adapters.NotificationListAdapter
 import by.iapsit.notikeeper.databinding.FragmentNotificationListBinding
 import by.iapsit.notikeeper.utils.SwipeTouchHelper
 import by.iapsit.notikeeper.utils.makeSnackBarWithAction
+import by.iapsit.notikeeper.utils.makeVibration
 import by.iapsit.notikeeper.view.FlowActivity
 import by.iapsit.notikeeper.viewModel.NotificationListViewModel
 import org.koin.android.ext.android.inject
@@ -23,6 +25,8 @@ import org.koin.core.parameter.parametersOf
 class NotificationListFragment : Fragment() {
 
     private lateinit var binding: FragmentNotificationListBinding
+
+    private val vibrator by inject<Vibrator> { parametersOf(requireContext()) }
 
     private val viewModel by viewModel<NotificationListViewModel> {
         parametersOf(
@@ -42,6 +46,8 @@ class NotificationListFragment : Fragment() {
                 list.remove(notification)
                 viewModel.deleteNotificationByID(notification.id)
                 notificationAdapter.setData(list)
+
+                vibrator.makeVibration(100L)
 
                 with(resources) {
                     requireActivity().makeSnackBarWithAction(
