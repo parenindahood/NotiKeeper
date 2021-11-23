@@ -3,10 +3,7 @@ package by.iapsit.notikeeper
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import by.iapsit.notikeeper.db.NotificationDatabase
-import by.iapsit.notikeeper.di.adaptersModule
-import by.iapsit.notikeeper.di.databaseModule
-import by.iapsit.notikeeper.di.sharedPreferencesModule
-import by.iapsit.notikeeper.di.viewModelsModule
+import by.iapsit.notikeeper.di.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -27,7 +24,8 @@ class App : Application() {
                     viewModelsModule,
                     sharedPreferencesModule,
                     adaptersModule,
-                    databaseModule
+                    databaseModule,
+                    vibratorModule
                 )
             )
         }

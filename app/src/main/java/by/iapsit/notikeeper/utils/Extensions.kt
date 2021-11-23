@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.SharedPreferences
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import android.widget.Toast
 import by.iapsit.notikeeper.model.ApplicationData
@@ -20,18 +23,28 @@ fun Activity.makeSnackBarWithAction(
     .show()
 
 fun SharedPreferences.putBoolean(tag: String, value: Boolean) =
-    this.edit().putBoolean(tag, value).apply()
+    edit().putBoolean(tag, value).apply()
 
 fun List<ApplicationInfo>.toData(packageManager: PackageManager): List<ApplicationData> {
     val list = mutableListOf<ApplicationData>()
-    this.forEach {
+    forEach {
         with(packageManager) {
-            list.add(ApplicationData(
+            list.add(
+                ApplicationData(
                     it.packageName,
                     getApplicationLabel(it).toString(),
                     getApplicationIcon(it)
-            ))
+                )
+            )
         }
     }
     return list
+}
+
+fun Vibrator.makeVibration(milliseconds: Long) {
+    if (hasVibrator()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else vibrate(milliseconds)
+    }
 }

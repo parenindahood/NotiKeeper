@@ -3,6 +3,7 @@ package by.iapsit.notikeeper.view
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Vibrator
 import android.provider.Settings
 import android.util.TypedValue
 import android.view.MenuItem
