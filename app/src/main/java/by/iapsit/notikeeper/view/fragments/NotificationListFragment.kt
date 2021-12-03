@@ -147,7 +147,7 @@ class NotificationListFragment : Fragment() {
                     setDrawable(
                         ResourcesCompat.getDrawable(
                             resources,
-                            R.drawable.drawable_divider,
+                            R.drawable.drawable_notification_divider,
                             null
                         )!!
                     )

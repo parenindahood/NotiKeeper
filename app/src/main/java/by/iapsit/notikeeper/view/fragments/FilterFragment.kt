@@ -96,7 +96,7 @@ class FilterFragment : Fragment() {
                     setDrawable(
                         ResourcesCompat.getDrawable(
                             resources,
-                            R.drawable.drawable_divider,
+                            R.drawable.drawable_application_divider,
                             null
                         )!!
                     )
