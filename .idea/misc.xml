@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/drawable_application_divider.xml" value="0.20092592592592592" />
         <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/drawable_divider.xml" value="0.2264840182648402" />
         <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/gradient_launcher.xml" value="0.2264840182648402" />
         <entry key="..\:/Code/AndroidStudio/NotiKeeper/app/src/main/res/drawable/ic_android.xml" value="0.22962962962962963" />
