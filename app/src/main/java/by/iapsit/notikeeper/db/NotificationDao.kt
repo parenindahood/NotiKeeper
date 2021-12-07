@@ -17,13 +17,10 @@ interface NotificationDao {
     @Insert
     fun insertNotificationList(list: List<NotificationEntity>)
 
-    @Query("SELECT package_name FROM NotificationEntity")
+    @Query("SELECT DISTINCT package_name FROM NotificationEntity WHERE package_name NOT IN (SELECT package_name FROM FavouriteApplicationEntity)")
     fun getPackageNamesLiveData(): LiveData<List<String>>
 
-    @Query("SELECT package_name FROM NotificationEntity")
-    fun getPackageNames(): List<String>
-
-    @Query("SELECT * FROM NotificationEntity WHERE package_name LIKE :packageName")
+    @Query("SELECT * FROM NotificationEntity WHERE package_name LIKE :packageName ORDER BY post_time")
     fun getNotificationsByPackageNameLiveData(packageName: String): LiveData<List<NotificationEntity>>
 
     @Query("SELECT * FROM NotificationEntity WHERE package_name LIKE :packageName")
@@ -35,7 +32,7 @@ interface NotificationDao {
     @Query("DELETE FROM NotificationEntity WHERE notification_id LIKE :id")
     fun deleteNotificationByID(id: Long)
 
-    @Query("DELETE FROM NotificationEntity ")
+    @Query("DELETE FROM NotificationEntity")
     fun deleteAllNotifications()
 
     @Insert
@@ -43,9 +40,6 @@ interface NotificationDao {
 
     @Query("SELECT package_name FROM FavouriteApplicationEntity")
     fun getFavouritePackageNamesLiveData(): LiveData<List<String>>
-
-    @Query("SELECT package_name FROM FavouriteApplicationEntity")
-    fun getFavouritePackageNames(): List<String>
 
     @Query("DELETE FROM FavouriteApplicationEntity WHERE package_name LIKE :packageName")
     fun deleteFavouritePackageName(packageName: String)
@@ -70,6 +64,6 @@ interface NotificationDao {
     @Query("SELECT EXISTS(SELECT * FROM FilteredApplicationEntity WHERE package_name LIKE :packageName)")
     fun checkIsFiltered(packageName: String): Boolean
 
-    @Query("SELECT package_name FROM FilteredApplicationEntity")
-    fun getAllFilteredPackageNames(): List<String>
+    @Query("SELECT DISTINCT package_name FROM NotificationEntity WHERE package_name NOT IN (SELECT package_name FROM FavouriteApplicationEntity) AND package_name NOT IN (SELECT package_name FROM FilteredApplicationEntity)")
+    fun getFilteredPackageNamesLiveData(): LiveData<List<String>>
 }

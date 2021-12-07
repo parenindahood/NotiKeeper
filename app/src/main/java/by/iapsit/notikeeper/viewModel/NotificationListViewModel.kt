@@ -33,7 +33,7 @@ class NotificationListViewModel(application: Application, val packageName: Strin
         get() = _applicationInfoLiveData
 
     private val observer = Observer<List<NotificationEntity>> { list ->
-        _notificationListLiveData.postValue(list.map { it.toData() }.sortedBy { it.postTime })
+        _notificationListLiveData.postValue(list.map { it.toData() })
         _stateScreenListener.postValue(ScreenState.CONTENT)
     }
 
