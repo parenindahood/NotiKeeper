@@ -44,9 +44,13 @@ class NotificationListFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val list = notificationAdapter.currentList.toMutableList()
                 val notification = list[viewHolder.adapterPosition]
-                list.remove(notification)
+
                 viewModel.deleteNotificationByID(notification.id)
-                notificationAdapter.setData(list)
+
+                if (flagSearching) {
+                    list.remove(notification)
+                    notificationAdapter.setData(list)
+                }
 
                 vibrator.makeVibration(Constants.VIBRATION_DURATION)
 
@@ -56,12 +60,14 @@ class NotificationListFragment : Fragment() {
                         getString(R.string.cancel),
                         binding.root
                     ) {
-                        viewModel.undoDeleteNotification(notification)
+                        viewModel.undoDeleteNotification(notification.id)
                     }
                 }
             }
         }
     }
+
+    private var flagSearching = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -112,11 +118,15 @@ class NotificationListFragment : Fragment() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 viewModel.removeObserverLiveData()
                 notificationAdapter.filter.filter(query)
+                flagSearching = true
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                if (newText.isBlank()) viewModel.observeLiveData()
+                if (newText.isBlank()) {
+                    viewModel.observeLiveData()
+                    flagSearching = false
+                }
                 return false
             }
         })
@@ -154,12 +164,5 @@ class NotificationListFragment : Fragment() {
                 }
             )
         }
-    }
-
-    interface UIController {
-
-        fun showNotificationsUI()
-
-        fun hideNotificationsUI()
     }
 }

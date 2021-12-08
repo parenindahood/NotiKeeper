@@ -13,6 +13,7 @@ import by.iapsit.notikeeper.R
 import by.iapsit.notikeeper.databinding.FragmentSettingsBinding
 import by.iapsit.notikeeper.utils.BiometricUtils
 import by.iapsit.notikeeper.utils.Constants
+import by.iapsit.notikeeper.utils.makeToast
 import by.iapsit.notikeeper.utils.putBoolean
 import by.iapsit.notikeeper.view.FlowActivity
 import by.iapsit.notikeeper.view.dialog.DeleteDataConfirmationDialogFragment
@@ -55,6 +56,14 @@ class SettingsFragment : Fragment(),
                 findNavController().navigate(
                     SettingsFragmentDirections.actionSettingsToFilter()
                 )
+            }
+            returnButton.setOnClickListener {
+                viewModel.returnData()
+                requireActivity().makeToast(getString(R.string.success))
+            }
+            returnButton.setOnLongClickListener {
+                requireActivity().makeToast(getString(R.string.return_data_for_the_last_24_hours))
+                true
             }
         }
     }

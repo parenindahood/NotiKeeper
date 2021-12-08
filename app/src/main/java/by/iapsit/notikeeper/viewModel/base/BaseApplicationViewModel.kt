@@ -8,10 +8,8 @@ import androidx.core.content.res.ResourcesCompat
 import by.iapsit.notikeeper.App
 import by.iapsit.notikeeper.R
 import by.iapsit.notikeeper.db.entities.FavouriteApplicationEntity
-import by.iapsit.notikeeper.db.entities.NotificationEntity
 import by.iapsit.notikeeper.model.ApplicationData
 import by.iapsit.notikeeper.utils.Constants
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 abstract class BaseApplicationViewModel(application: Application) : BaseViewModel(application) {
@@ -41,27 +39,17 @@ abstract class BaseApplicationViewModel(application: Application) : BaseViewMode
     fun deleteNotificationsByPackageName(packageName: String) {
         uiScope.launch {
             ioScope.launch {
-                notificationDao.deleteNotificationsByPackageName(packageName)
+                notificationDao.softDeleteNotifications(packageName, true)
             }
         }
     }
 
-    fun undoDeleteApplication(list: List<NotificationEntity>) {
+    fun undoDeleteNotifications(packageName: String) {
         uiScope.launch {
             ioScope.launch {
-                notificationDao.insertNotificationList(list)
+                notificationDao.softDeleteNotifications(packageName, false)
             }
         }
-    }
-
-    suspend fun getNotificationsByPackageName(packageName: String): List<NotificationEntity> {
-        val firstTask = uiScope.async {
-            val secondTask = ioScope.async {
-                notificationDao.getNotificationsByPackageName(packageName)
-            }
-            secondTask.await()
-        }
-        return firstTask.await()
     }
 
     protected fun makeListOfApplicationInfo(packageNames: List<String>): List<ApplicationData> {
@@ -79,7 +67,11 @@ abstract class BaseApplicationViewModel(application: Application) : BaseViewMode
                     )
                 }
             } catch (e: PackageManager.NameNotFoundException) {
-                if (!preferences.getBoolean(Constants.HIDE_DELETED_PREF, false)) applicationList.add(
+                if (!preferences.getBoolean(
+                        Constants.HIDE_DELETED_PREF,
+                        false
+                    )
+                ) applicationList.add(
                     ApplicationData(
                         it,
                         it,

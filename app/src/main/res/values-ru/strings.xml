@@ -25,6 +25,9 @@
     <string name="filter">Фильтр приложений</string>
     <string name="filter_settings">Настройки фильтра</string>
     <string name="hide_notifications_from">Скрывать уведомления от:</string>
+    <string name="return_data_for_the_last_24_hours">Восстановить удаленные данные за последние 24 часа</string>
+    <string name="return_data">Восстановить удаленные данные</string>
+    <string name="success">Успешно</string>
 
     <!--    Delete data dialog-->
     <string name="delete_all_data_question">Вы уверены? Операцию невозможно отменить</string>

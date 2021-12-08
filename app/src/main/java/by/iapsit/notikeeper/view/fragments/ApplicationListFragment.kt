@@ -24,17 +24,11 @@ import by.iapsit.notikeeper.utils.makeSnackBarWithAction
 import by.iapsit.notikeeper.utils.makeVibration
 import by.iapsit.notikeeper.view.FlowActivity
 import by.iapsit.notikeeper.viewModel.ApplicationListViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class ApplicationListFragment : Fragment() {
-
-    private val uiScope = CoroutineScope(Dispatchers.Main)
 
     private lateinit var binding: FragmentApplicationListBinding
 
@@ -64,23 +58,20 @@ class ApplicationListFragment : Fragment() {
     private val itemTouchHelperCallback by lazy {
         object : SwipeTouchHelper(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                uiScope.launch {
-                    val packageName =
-                        applicationAdapter.currentList[viewHolder.adapterPosition].packageName
-                    val deletedList = viewModel.getNotificationsByPackageName(packageName)
+                val packageName =
+                    applicationAdapter.currentList[viewHolder.adapterPosition].packageName
 
-                    viewModel.deleteNotificationsByPackageName(packageName)
+                viewModel.deleteNotificationsByPackageName(packageName)
 
-                    vibrator.makeVibration(Constants.VIBRATION_DURATION)
+                vibrator.makeVibration(Constants.VIBRATION_DURATION)
 
-                    with(resources) {
-                        requireActivity().makeSnackBarWithAction(
-                            getString(R.string.item_deleted),
-                            getString(R.string.cancel),
-                            binding.root
-                        ) {
-                            viewModel.undoDeleteApplication(deletedList)
-                        }
+                with(resources) {
+                    requireActivity().makeSnackBarWithAction(
+                        getString(R.string.item_deleted),
+                        getString(R.string.cancel),
+                        binding.root
+                    ) {
+                        viewModel.undoDeleteNotifications(packageName)
                     }
                 }
             }
@@ -130,10 +121,5 @@ class ApplicationListFragment : Fragment() {
                 }
             )
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        uiScope.cancel()
     }
 }

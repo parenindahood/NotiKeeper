@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import by.iapsit.notikeeper.App
 import by.iapsit.notikeeper.R
 import by.iapsit.notikeeper.db.entities.NotificationEntity
-import by.iapsit.notikeeper.db.entities.toEntity
 import by.iapsit.notikeeper.model.ApplicationData
 import by.iapsit.notikeeper.model.NotificationData
 import by.iapsit.notikeeper.view.enums.ScreenState
@@ -54,7 +53,7 @@ class NotificationListViewModel(application: Application, val packageName: Strin
     fun deleteNotificationByID(id: Long) {
         uiScope.launch {
             ioScope.launch {
-                notificationDao.deleteNotificationByID(id)
+                notificationDao.softDeleteNotificationByID(id, true)
             }
         }
     }
@@ -87,10 +86,10 @@ class NotificationListViewModel(application: Application, val packageName: Strin
         }
     }
 
-    fun undoDeleteNotification(notification: NotificationData) {
+    fun undoDeleteNotification(id: Long) {
         uiScope.launch {
             ioScope.launch {
-                notificationDao.insertNotification(notification.toEntity())
+                notificationDao.softDeleteNotificationByID(id, false)
             }
         }
     }

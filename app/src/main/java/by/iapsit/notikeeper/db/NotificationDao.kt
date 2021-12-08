@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import by.iapsit.notikeeper.db.entities.FavouriteApplicationEntity
 import by.iapsit.notikeeper.db.entities.FilteredApplicationEntity
 import by.iapsit.notikeeper.db.entities.NotificationEntity
@@ -17,10 +18,10 @@ interface NotificationDao {
     @Insert
     fun insertNotificationList(list: List<NotificationEntity>)
 
-    @Query("SELECT DISTINCT package_name FROM NotificationEntity WHERE package_name NOT IN (SELECT package_name FROM FavouriteApplicationEntity)")
+    @Query("SELECT DISTINCT package_name FROM NotificationEntity WHERE package_name NOT IN (SELECT package_name FROM FavouriteApplicationEntity) AND is_deleted = 0")
     fun getPackageNamesLiveData(): LiveData<List<String>>
 
-    @Query("SELECT * FROM NotificationEntity WHERE package_name LIKE :packageName ORDER BY post_time")
+    @Query("SELECT * FROM NotificationEntity WHERE package_name LIKE :packageName AND is_deleted = 0 ORDER BY post_time")
     fun getNotificationsByPackageNameLiveData(packageName: String): LiveData<List<NotificationEntity>>
 
     @Query("SELECT * FROM NotificationEntity WHERE package_name LIKE :packageName")
@@ -28,9 +29,6 @@ interface NotificationDao {
 
     @Query("DELETE FROM NotificationEntity WHERE package_name LIKE :packageName")
     fun deleteNotificationsByPackageName(packageName: String)
-
-    @Query("DELETE FROM NotificationEntity WHERE notification_id LIKE :id")
-    fun deleteNotificationByID(id: Long)
 
     @Query("DELETE FROM NotificationEntity")
     fun deleteAllNotifications()
@@ -66,4 +64,16 @@ interface NotificationDao {
 
     @Query("SELECT DISTINCT package_name FROM NotificationEntity WHERE package_name NOT IN (SELECT package_name FROM FavouriteApplicationEntity) AND package_name NOT IN (SELECT package_name FROM FilteredApplicationEntity)")
     fun getFilteredPackageNamesLiveData(): LiveData<List<String>>
+
+    @Query("UPDATE NotificationEntity SET is_deleted = :isDeleted WHERE package_name LIKE :packageName")
+    fun softDeleteNotifications(packageName: String, isDeleted: Boolean)
+
+    @Query("DELETE FROM NotificationEntity WHERE is_deleted LIKE 1")
+    fun deleteAllSoftDeletedNotifications()
+
+    @Query("UPDATE NotificationEntity SET is_deleted = 0")
+    fun cancelSoftDeleting()
+
+    @Query("UPDATE NotificationEntity SET is_deleted = :isDeleted WHERE notification_id LIKE :id")
+    fun softDeleteNotificationByID(id: Long, isDeleted: Boolean)
 }

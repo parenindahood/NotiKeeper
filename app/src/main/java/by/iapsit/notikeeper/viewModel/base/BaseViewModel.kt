@@ -2,6 +2,7 @@ package by.iapsit.notikeeper.viewModel.base
 
 import android.app.Application
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -32,9 +33,13 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     }
 
     protected fun isSystemPackage(packageName: String): Boolean {
-        return packageManager.getPackageInfo(
-            packageName,
-            0
-        ).applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+        return try {
+            packageManager.getPackageInfo(
+                packageName,
+                0
+            ).applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
     }
 }

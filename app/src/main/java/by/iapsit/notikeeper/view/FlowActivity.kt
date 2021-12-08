@@ -13,13 +13,19 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import by.iapsit.notikeeper.R
 import by.iapsit.notikeeper.databinding.ActivityFlowBinding
 import by.iapsit.notikeeper.utils.BiometricUtils
 import by.iapsit.notikeeper.utils.Constants
 import by.iapsit.notikeeper.utils.makeToast
+import by.iapsit.notikeeper.workers.DeleteDataWorker
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
+import java.util.concurrent.TimeUnit
 
 class FlowActivity : AppCompatActivity() {
 
@@ -31,6 +37,8 @@ class FlowActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFlowBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        startWorkerForDeleting()
 
         authorize()
     }
@@ -108,5 +116,20 @@ class FlowActivity : AppCompatActivity() {
     fun hideNotificationsUI() {
         showBottomNavigationView()
         hideBackButton()
+    }
+
+    private fun startWorkerForDeleting() {
+        val workRequest = PeriodicWorkRequestBuilder<DeleteDataWorker>(
+            Constants.DELETING_INTERVAL,
+            TimeUnit.HOURS,
+            Constants.FLEX_TIME_INTERVAL,
+            TimeUnit.HOURS
+        ).build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            Constants.DELETING_WORK_TAG,
+            ExistingPeriodicWorkPolicy.KEEP,
+            workRequest
+        )
     }
 }
