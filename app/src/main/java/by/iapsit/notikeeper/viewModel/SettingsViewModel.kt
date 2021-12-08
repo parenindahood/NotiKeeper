@@ -14,4 +14,12 @@ class SettingsViewModel(application: Application) : BaseViewModel(application) {
             }
         }
     }
+
+    fun returnData() {
+        uiScope.launch {
+            ioScope.launch {
+                notificationDao.cancelSoftDeleting()
+            }
+        }
+    }
 }

@@ -57,7 +57,6 @@ class FavouritesListFragment : Fragment() {
                 uiScope.launch {
                     val packageName =
                         favouritesAdapter.currentList[viewHolder.adapterPosition].packageName
-                    val deletedList = viewModel.getNotificationsByPackageName(packageName)
 
                     viewModel.deleteNotificationsByPackageName(packageName)
                     viewModel.deleteFavouriteApplication(packageName)
@@ -75,7 +74,7 @@ class FavouritesListFragment : Fragment() {
                                     packageName
                                 )
                             )
-                            viewModel.undoDeleteApplication(deletedList)
+                            viewModel.undoDeleteNotifications(packageName)
                         }
                     }
                 }

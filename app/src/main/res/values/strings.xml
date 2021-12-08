@@ -25,6 +25,10 @@
     <string name="filter">Filter</string>
     <string name="filter_settings">Filter settings</string>
     <string name="hide_notifications_from">Hide notifications from:</string>
+    <string name="return_data_for_the_last_24_hours">Return deleted data for the last 24 hours</string>
+    <string name="return_data">Return deleted data</string>
+    <string name="success">Successful</string>
+
 
     <!--    Delete data dialog-->
     <string name="delete_all_data_question">Are you sure? The operation cannot be canceled</string>
