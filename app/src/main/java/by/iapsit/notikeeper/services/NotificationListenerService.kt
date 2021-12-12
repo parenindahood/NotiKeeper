@@ -7,6 +7,7 @@ import by.iapsit.notikeeper.App
 import by.iapsit.notikeeper.db.entities.NotificationEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class NotificationListenerService : NotificationListenerService() {
@@ -46,5 +47,11 @@ class NotificationListenerService : NotificationListenerService() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        uiScope.cancel()
+        ioScope.cancel()
     }
 }
